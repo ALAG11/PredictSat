@@ -6,10 +6,10 @@ from sklearn.cluster import KMeans
 import cv2
 
 # Directory containing your dataset
-dataset_dir = '/content/result/'
+dataset_dir = '/home/trg1/alok/model/croppedimages'
 
 # Directory to save the segmented images
-segmented_dir = '/content/nextstepimage/'
+segmented_dir = '/home/trg1/alok/model/segmentedimages'
 
 # Ensure the output directories exist
 os.makedirs(segmented_dir, exist_ok=True)

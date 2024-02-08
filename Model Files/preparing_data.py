@@ -7,10 +7,10 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 
 # Directory containing segmented images
-segmented_dir = '/content/nextstepimage/'
+segmented_dir = '/home/trg1/alok/model/segmentedimages'
 
 # Directory to save the prepared data
-prepared_data_dir = '/content/prepareddata/'
+prepared_data_dir = '/home/trg1/alok/model/prepareddata/'
 
 # Ensure the output directory exists
 os.makedirs(prepared_data_dir, exist_ok=True)
