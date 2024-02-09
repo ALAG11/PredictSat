@@ -1,7 +1,7 @@
 import numpy as np
 import os
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import ConvLSTM2D, BatchNormalization, Flatten, Dense
+from tensorflow.keras.layers import ConvLSTM2D, BatchNormalization, Conv2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
@@ -25,15 +25,14 @@ input_shape = x_train.shape[1:]
 
 # Define the model
 model = Sequential()
-model.add(ConvLSTM2D(filters=64, kernel_size=(3, 3), return_sequences=True, activation='relu', input_shape=input_shape))
+model.add(ConvLSTM2D(filters=32, kernel_size=(3, 3), return_sequences=True, activation='relu', input_shape=input_shape, padding='same'))
 model.add(BatchNormalization())
-model.add(ConvLSTM2D(filters=64, kernel_size=(3, 3), return_sequences=False, activation='relu'))
+model.add(ConvLSTM2D(filters=32, kernel_size=(3, 3), return_sequences=False, activation='relu', padding='same'))
 model.add(BatchNormalization())
-model.add(Flatten())
-model.add(Dense(1))  # Adjust the number of neurons in the output layer to match your task
+model.add(Conv2D(1, (1, 1), activation='linear', padding='same'))  # Replace the Dense layer with a Conv2D layer
 
 # Compile the model
-opt = Adam(learning_rate=0.001)
+opt = Adam(learning_rate=0.001, clipvalue=0.5)
 model.compile(optimizer=opt, loss='mse')  # Adjust the optimizer and loss to match your task
 
 # Define callbacks
@@ -41,4 +40,4 @@ checkpoint = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='min', sa
 earlystop = EarlyStopping(monitor='val_loss', patience=5)
 
 # Train the model
-model.fit(x_train, y_train, epochs=100, batch_size=32, validation_data=(x_test, y_test), callbacks=[checkpoint, earlystop])  # Adjust the number of epochs and batch size as needed
+model.fit(x_train, y_train, epochs=100, batch_size=16, validation_data=(x_test, y_test), callbacks=[checkpoint, earlystop])  # Adjust the number of epochs and batch size as needed
