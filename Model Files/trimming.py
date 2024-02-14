@@ -3,23 +3,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-# Directory containing your dataset
+# Directory containing the dataset
 dataset_dir = '/home/trg1/alok/model/origdataset'
 
 # Directory to save the cropped images
 output_dir = '/home/trg1/alok/model/croppedimages'
 
-# Ensure the output directory exists
+# Ensuring that output directory exists
 os.makedirs(output_dir, exist_ok=True)
 
 # Iterate over all images in the dataset directory
 for filename in os.listdir(dataset_dir):
     # Check if the file is an image
     if filename.endswith('.png') or filename.endswith('.jpg'):
-        # Construct the full file path
+        # Constructing the full file path
         filepath = os.path.join(dataset_dir, filename)
         
-        # Open the image file
+        # Opening the image file
         with Image.open(filepath) as img:
             area = (0, 305, img.width, img.height)
             
