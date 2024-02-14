@@ -14,11 +14,11 @@ prepared_data_dir = '/home/trg1/alok/model/prepareddata/'
 train_data = np.load(os.path.join(prepared_data_dir,'train_data.npy'))
 test_data = np.load(os.path.join(prepared_data_dir,'test_data.npy'))
 
-# Assuming your data is in the form [input_data, target_data]
+# Assuming the data is in the form [input_data, target_data]
 x_train, y_train = train_data[:, 0], train_data[:, 1]
 x_test, y_test = test_data[:, 0], test_data[:, 1]
 
-# Add a time dimension to your data
+# Add a time dimension to the data
 x_train = np.expand_dims(x_train, axis=1)  # Now shape is (samples, 1, rows, cols)
 x_test = np.expand_dims(x_test, axis=1)  # Now shape is (samples, 1, rows, cols)
 
