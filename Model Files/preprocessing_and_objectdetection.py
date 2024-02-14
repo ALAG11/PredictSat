@@ -35,7 +35,7 @@ for filename in os.listdir(dataset_dir):
 
         adaptive_thresh_img = cv2.adaptiveThreshold(normalized_img, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 2)
 
-        # Performing K-means clustering 
+        # Performing K-means clustering (Object / Feature Detection)
         kmeans = KMeans(n_clusters=50, random_state=0).fit(pixels)
 
         # Replace each pixel with its cluster center
