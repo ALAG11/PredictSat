@@ -5,7 +5,7 @@ import os
 from sklearn.cluster import KMeans
 import cv2
 
-# Directory containing the dataset
+# Directory containing the cropped images
 dataset_dir = '/home/trg1/alok/model/croppedimages'
 
 # Directory to save the segmented images
