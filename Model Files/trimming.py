@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 # Directory containing the dataset
-dataset_dir = '/home/trg1/alok/model/origdataset'
+dataset_dir = '/home/trg1/alok/model/data'
 
 # Directory to save the cropped images
 output_dir = '/home/trg1/alok/model/croppedimages'
