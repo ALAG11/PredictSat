@@ -6,8 +6,8 @@ import os
 # Directory containing the dataset
 dataset_dir = '/home/trg1/alok/model/data'
 
-# Directory to save the cropped images
-output_dir = '/home/trg1/alok/model/CroppedImages'
+# Directory to save the trimmed images
+output_dir = '/home/trg1/alok/model/TrimmedImages'
 
 # Ensuring that output directory exists
 os.makedirs(output_dir, exist_ok=True)
