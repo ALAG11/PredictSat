@@ -4,12 +4,13 @@ import matplotlib.pyplot as plt
 import os
 from sklearn.cluster import KMeans
 import cv2
+import matplotlib.cm as cm
 
 # Directory containing the cropped images
-dataset_dir = '/home/trg1/alok/model/croppedimages'
+dataset_dir = '/home/trg1/alok/model/result'
 
 # Directory to save the segmented images
-segmented_dir = '/home/trg1/alok/model/segmentedimages'
+segmented_dir = '/home/trg1/alok/model/color'
 
 # Ensuring that output directories exist
 os.makedirs(segmented_dir, exist_ok=True)
@@ -20,7 +21,7 @@ for filename in os.listdir(dataset_dir):
     if filename.endswith('.png') or filename.endswith('.jpg'):
         # Constructing the full file path
         filepath = os.path.join(dataset_dir, filename)
-        
+
         # Load the image
         img = cv2.imread(filepath, 0)
 
@@ -36,10 +37,37 @@ for filename in os.listdir(dataset_dir):
         adaptive_thresh_img = cv2.adaptiveThreshold(normalized_img, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 2)
 
         # Performing K-means clustering (Object / Feature Detection)
-        kmeans = KMeans(n_clusters=50, random_state=0).fit(pixels)
+        kmeans = KMeans(n_clusters=100, random_state=0).fit(pixels)  # Increased number of clusters
 
         # Replace each pixel with its cluster center
         segmented_img = kmeans.cluster_centers_[kmeans.labels_].reshape(normalized_img.shape).astype(np.uint8)
 
-        # Saving the segmented image
-        cv2.imwrite(os.path.join(segmented_dir, 'segmented_' + filename), segmented_img)
+        # Apply colormap
+        colormap = cm.get_cmap('tab10', 256)  # Use 'tab10' or any other qualitative colormap
+        colored_img = colormap(segmented_img)
+
+        # Convert the colored image to a format that can be used with OpenCV
+        colored_img = (colored_img * 255).astype(np.uint8)
+
+        # Convert the OpenCV image (RGBA) to a matplotlib image (RGB)
+        colored_img_rgb = cv2.cvtColor(colored_img, cv2.COLOR_RGBA2RGB)
+
+        # Resize the image to match the original image size
+        original_img = cv2.imread(filepath)
+        original_height, original_width = original_img.shape[:2]
+        resized_img = cv2.resize(colored_img_rgb, (original_width, original_height), interpolation = cv2.INTER_LINEAR)
+
+        # Create a new matplotlib figure and set its size
+        plt.figure(figsize=(10, 10))
+
+        # Display the image
+        plt.imshow(resized_img)
+
+        # Add a colorbar
+        plt.colorbar()
+
+        # Save the figure
+        plt.savefig(os.path.join(segmented_dir, 'segmented_' + filename))
+
+        # Close the figure to free up memory
+        plt.close()
