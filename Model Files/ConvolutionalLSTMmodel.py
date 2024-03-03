@@ -6,7 +6,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
 # Specifying the directory where the .npy prepared data files are located
-prepared_data_dir = '/home/trg1/alok/model/prepareddata/'
+prepared_data_dir = '/home/trg1/alok/model/PreparedData'
 
 # Loading the training and testing data
 train_data = np.load(os.path.join(prepared_data_dir,'train_data.npy'))
