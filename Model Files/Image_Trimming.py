@@ -7,7 +7,7 @@ import os
 dataset_dir = '/home/trg1/alok/model/data'
 
 # Directory to save the cropped images
-output_dir = '/home/trg1/alok/model/croppedimages'
+output_dir = '/home/trg1/alok/model/CroppedImages'
 
 # Ensuring that output directory exists
 os.makedirs(output_dir, exist_ok=True)
