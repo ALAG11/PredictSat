@@ -6,8 +6,8 @@ from sklearn.cluster import KMeans
 import cv2
 import matplotlib.cm as cm
 
-# Directory containing the cropped images
-dataset_dir = '/home/trg1/alok/model/CroppedImages'
+# Directory containing the trimmed images
+dataset_dir = '/home/trg1/alok/model/TrimmedImages'
 
 # Directory to save the segmented images
 segmented_dir = '/home/trg1/alok/model/SegmentedImages'
