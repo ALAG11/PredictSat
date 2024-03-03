@@ -7,10 +7,10 @@ import cv2
 import matplotlib.cm as cm
 
 # Directory containing the cropped images
-dataset_dir = '/home/trg1/alok/model/result'
+dataset_dir = '/home/trg1/alok/model/CroppedImages'
 
 # Directory to save the segmented images
-segmented_dir = '/home/trg1/alok/model/color'
+segmented_dir = '/home/trg1/alok/model/SegmentedImages'
 
 # Ensuring that output directories exist
 os.makedirs(segmented_dir, exist_ok=True)
