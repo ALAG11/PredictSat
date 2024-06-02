@@ -24,27 +24,31 @@ for filename in sorted(os.listdir(segmented_dir)):
         filepath = os.path.join(segmented_dir, filename)
         
         # Loading the segmented image as a numpy array and append to data list if not empty 
-        img = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread(filepath, cv2.IMREAD_COLOR)
         if img.size > 0:
+            # Resize the image to 512x512
+            img = cv2.resize(img, (512, 512))
+            # Normalize the image data to [0, 1]
+            img = img / 255.0
             data.append(img)
 
 # Convert list to numpy array 
 data = np.array(data)
 
-# Creating Sequences 
+# Creating sequences
 seq_length = 10 
 sequences = [data[i:i+seq_length] for i in range(data.shape[0]-seq_length)]
 
-# Normalizing Data (0-1 range) 
-normalized_sequences = [(seq - np.min(seq)) / (np.max(seq) - np.min(seq)) for seq in sequences]
+# Convert list of sequences to numpy array
+sequences = np.array(sequences)
 
 # Split Data into Training and Testing Sets 
-train_data, test_data = train_test_split(normalized_sequences, test_size=0.2)
+train_data, test_data = train_test_split(sequences, test_size=0.2)
 
-# Reshape Data fit model input dimensions  
-train_data = np.reshape(train_data, (len(train_data), seq_length,) + img.shape + (1,))
-test_data = np.reshape(test_data, (len(test_data), seq_length,) + img.shape + (1,))
+# Reshape Data to fit model input dimensions
+train_data = np.reshape(train_data, (len(train_data), seq_length, 512, 512, 3))
+test_data = np.reshape(test_data, (len(test_data), seq_length, 512, 512, 3))
 
-# Saving prepared data new folder (.npy files)  
-np.save(os.path.join(prepared_data_dir,'train_data.npy'), train_data)
-np.save(os.path.join(prepared_data_dir,'test_data.npy'), test_data)
+# Saving prepared data in new folder (.npy files)  
+np.save(os.path.join(prepared_data_dir, 'train_data.npy'), train_data)
+np.save(os.path.join(prepared_data_dir, 'test_data.npy'), test_data)
